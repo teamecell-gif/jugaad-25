@@ -1,6 +1,5 @@
 import { useState } from "react";
-import "./style.css";
-// import { useState } from "react";
+import "./style.css"; // Ensure this file exists
 import axios from "axios"; // Import Axios
 
 function Register() {
@@ -25,60 +24,53 @@ function Register() {
 
   const handleOptionChange = (e) => {
     setIsTeam(e.target.value === "team");
+    if (e.target.value !== "team") setTeamSize("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      // Construct the data to send in the request
       const userData = {
         teamName,
-        teamSize,
+        teamSize: isTeam ? teamSize : "1",
         teamLeaderName,
         email,
         phoneNumber,
       };
 
       if (isTeam) {
-        // Make sure that each team member input field has a value
         for (let i = 0; i < parseInt(teamSize) - 1; i++) {
           const teamMemberInput = document.getElementById(`teamMember${i + 1}`);
           if (!teamMemberInput.value) {
             throw new Error(`Team member ${i + 1} name is required`);
           }
         }
-
-        // Add the team member names to the user data object
         for (let i = 0; i < parseInt(teamSize) - 1; i++) {
           userData[`teamMember${i + 1}`] = document.getElementById(
             `teamMember${i + 1}`
           ).value;
         }
       }
-      // Make the POST request to your backend
-      const response = await axios.post(
-        "https://jugaadecell.onrender.com/api/register",
-        userData
-      ); // Adjust the URL as needed
 
-      // Handle the response (you can display a success message or redirect to a new page)
+      const response = await axios.post(
+        "https://jugaad-backend-kn8m.onrender.com/api/register",
+        userData
+      );
+
       console.log("Registration successful:", response.data);
       setRegistrationSuccess(true);
     } catch (error) {
       setErrorMsg(false);
       if (error.response && error.response.status === 400) {
         setErrorMsg(false);
-        // Server validation error, you can handle or display the error message as needed
         console.error("Error registering user:", error.response.data.error);
       } else {
         setErrorMsg(false);
-        // Handle other errors
         console.error("Error registering user:", error);
       }
     } finally {
       setIsLoading(false);
-      setErrorMsg(true); // Reset loading state to false when the request is complete
     }
   };
 
@@ -86,25 +78,13 @@ function Register() {
     const inputs = [];
     for (let i = 0; i < parseInt(teamSize) - 1; i++) {
       inputs.push(
-        // <div key={i}>
-        //   <label htmlFor={`teamMember${i + 1}`}>Team Member {i + 1}</label>
-        //   <input
-        //     type="text"
-        //     id={`teamMember${i + 1}`}
-        //     name={`teamMember${i + 1}`}
-        //     className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
-        //   />
-        // </div>
         <div className="flex flex-col mb-2" key={i}>
-          <label htmlFor={`teamMember${i + 1}`} className="mb-2">
-            Team Member {i + 1}
-          </label>
+          <label className="mb-1 text-white">Team Member {i + 1}</label>
           <input
             type="text"
             id={`teamMember${i + 1}`}
             name={`teamMember${i + 1}`}
-            // value={`teamMember${i + 1}`}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
+            className="border border-white/30 bg-white/20 text-white placeholder-white/70 rounded px-2 py-1 focus:outline-none"
           />
         </div>
       );
@@ -112,89 +92,95 @@ function Register() {
     return inputs;
   }
 
+  /* ---------------- SUCCESS SCREEN ---------------- */
+  /* ---------------- SUCCESS SCREEN ---------------- */
   if (registrationSuccess) {
     return (
       <div
-        id="register"
-        className="flex items-center justify-center h-full bg-cover"
+        id="register"  // <--- Added this ID so your background image loads!
+        className="min-h-screen w-full flex items-center justify-center bg-transparent py-10"
       >
-        <div className=" rounded-lg shadow-lg p-8 backdrop-blur-sm">
-          <h2 className="text-2xl font-bold text-black mb-4">
+        {/* Same Glassmorphism Card Style as the Form */}
+        <div className="flex flex-col w-full max-w-[450px] bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-10 shadow-xl text-white text-center">
+          
+          <h2 className="text-3xl font-bold mb-4">
             Registration Successful!
           </h2>
-          <p className="text-black">See you on 5th Nov at 9am </p>
+          
+          <p className="text-xl font-medium opacity-90">
+            See you on 14th Feb
+          </p>
+
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-8 border border-white/40 py-2 px-6 rounded font-semibold hover:bg-white hover:text-black transition-colors duration-300"
+          >
+            Register Another
+          </button>
+          
         </div>
       </div>
     );
   }
+
+  /* ---------------- FORM SCREEN ---------------- */
   return (
     <form
       id="register"
       onSubmit={handleSubmit}
-      className=" text-black about w-[100vw] bg-cover py-16 px-5 text-center xl:text-left flex items-center justify-center h-full"
+      className="min-h-screen w-full flex items-center justify-center bg-transparent py-10"
     >
-      <div className="flex flex-col w-full max-w-[450px] ">
-        <h1 className="font-bold text-5xl text-center mb-21">Register Here</h1>
-        <div className="flex flex-row justify-center scale-110 items-center mt-2">
-          <div className="flex m-4">
+      <div className="flex flex-col w-full max-w-[450px] bg-white/20 backdrop-blur-lg border border-white/30 rounded-xl p-6 shadow-xl text-white">
+        <h1 className="font-bold text-5xl text-center mb-6">Register Here</h1>
+
+        {/* TYPE SELECTION */}
+        <div className="flex justify-center mb-4">
+          <label className="mx-4 flex items-center cursor-pointer">
             <input
               type="radio"
-              id="individual"
               name="registrationType"
               value="individual"
               checked={!isTeam}
               onChange={handleOptionChange}
+              className="mr-2 accent-[#ff4655]" // Valorant Red Accent
             />
-            <label htmlFor="individual" className="font-bold ml-2">
-              Individual
-            </label>
-          </div>
-          <div className="flex items-center m-4">
+            Individual
+          </label>
+
+          <label className="mx-4 flex items-center cursor-pointer">
             <input
               type="radio"
-              id="team"
               name="registrationType"
               value="team"
               checked={isTeam}
               onChange={handleOptionChange}
+              className="mr-2 accent-[#ff4655]" // Valorant Red Accent
             />
-            <label htmlFor="team" className="font-bold ml-2">
-              Team
-            </label>
-          </div>
+            Team
+          </label>
         </div>
-        {isTeam && (
-          <div className="flex flex-col">
-            {/* <label htmlFor="teamName" className="mb-2">
-              Team Name
-            </label>
-            <input
-              type="text"
-              id="teamName"
-              name="teamName"
-              value={teamName}
-              onChange={(e) => setTeamName(e.target.value)}
-              className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
-            /> */}
-            <label htmlFor="teamName" className="mb-2">
-              Team Size
-            </label>
 
+        {/* TEAM SIZE SELECTOR */}
+        {isTeam && (
+          <div className="flex flex-col mb-2">
+            <label className="mb-1">Team Size</label>
             <select
               name="teamSize"
-              class="bg-white border border-gray-300 text-black rounded px-2 py-1 mb-2"
+              className="border border-white/30 bg-white/20 text-white rounded px-2 py-1 mb-2 focus:outline-none [&>option]:text-black"
               value={teamSize}
               onChange={handleTeamSizeChange}
             >
-              <option selected>Choose a Team size</option>
+              <option value="">Choose team size</option>
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
             </select>
           </div>
         )}
+
+        {/* INPUT FIELDS */}
         <div className="flex flex-col mb-4">
-          <label htmlFor="teamName" className="mb-2">
+          <label htmlFor="teamName" className="mb-1">
             Team Name
           </label>
           <input
@@ -203,9 +189,10 @@ function Register() {
             name="teamName"
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
+            className="border border-white/30 bg-white/20 text-white placeholder-white/70 rounded px-2 py-1 mb-2 focus:outline-none"
           />
-          <label htmlFor="teamLeaderName" className="mb-2">
+
+          <label htmlFor="teamLeaderName" className="mb-1">
             {isTeam ? "Team Leader Name" : "Name"}
           </label>
           <input
@@ -214,10 +201,12 @@ function Register() {
             name="teamLeaderName"
             value={teamLeaderName}
             onChange={(e) => setTeamLeaderName(e.target.value)}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
+            className="border border-white/30 bg-white/20 text-white placeholder-white/70 rounded px-2 py-1 mb-2 focus:outline-none"
           />
+
           {teamSize && renderTeamInputs()}
-          <label htmlFor="phoneNumber" className="mb-2">
+
+          <label htmlFor="phoneNumber" className="mb-1">
             Phone Number
           </label>
           <input
@@ -226,9 +215,10 @@ function Register() {
             name="phoneNumber"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value)}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
+            className="border border-white/30 bg-white/20 text-white placeholder-white/70 rounded px-2 py-1 mb-2 focus:outline-none"
           />
-          <label htmlFor="email" className="mb-2 ">
+
+          <label htmlFor="email" className="mb-1">
             Email Address
           </label>
           <input
@@ -237,35 +227,40 @@ function Register() {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded px-2 py-1 mb-2"
+            className="border border-white/30 bg-white/20 text-white placeholder-white/70 rounded px-2 py-1 mb-2 focus:outline-none"
           />
         </div>
-        <label className="mb-2">
+
+        {/* CHECKBOX */}
+        <label className="mb-3 flex items-center cursor-pointer">
           <input
             type="checkbox"
             checked={isChecked}
             onChange={handleCheckboxChange}
-            className="border bg-[#fff] text-[black] border-gray-400 rounded mb-2"
+            className="mr-2 accent-[#ff4655]" // Valorant Red Accent
           />
           I agree to the terms and conditions mentioned in the Rule Book
         </label>
-        {/* {errorMsg && <div className="text-red-500">team name and email should be unique</div>} */}
-        {errorMsg ? (
-          ""
-        ) : (
-          <div className="text-red-500">
-            team name and email should be unique
+
+        {!errorMsg && (
+          <div className="text-red-300 mb-2 text-center bg-red-900/20 rounded p-1">
+            Team name and email should be unique
           </div>
         )}
+
+        {/* --- VALORANT STYLE BUTTON --- */}
         <button
           type="submit"
-          href="https://flowbite.com/docs/forms/select/"
-          disabled={!isChecked && isLoading}
-          class="rounded-md px-3.5 max-w-[170px] py-2 m-1 overflow-hidden relative group cursor-pointer border-2 font-medium border-[#000] text-white"
+          disabled={!isChecked || isLoading}
+          // The 'group' class is essential for the hover effect
+          className="group relative w-full mt-4 py-3 bg-transparent border border-[#ff4655] text-white font-bold uppercase tracking-widest overflow-hidden disabled:opacity-50 disabled:cursor-not-allowed disabled:border-gray-500"
         >
-          <span class="absolute w-64 h-0 transition-all duration-300 origin-center rotate-45 -translate-x-20 bg-[orange] top-1/2 group-hover:h-64 group-hover:-translate-y-32 ease"></span>
-          <span class="relative text-black transition duration-300 group-hover:text-white ease">
-            {isLoading ? "Loading" : "Register"}
+          {/* Sliding Background Element */}
+          <span className="absolute inset-0 bg-[#ff4655] -translate-x-[105%] skew-x-[-20deg] group-hover:translate-x-0 transition-transform duration-300 ease-out origin-left scale-150"></span>
+
+          {/* Text Content (Relative to sit above the slide) */}
+          <span className="relative z-10 drop-shadow-md">
+            {isLoading ? "Loading..." : "Register"}
           </span>
         </button>
       </div>

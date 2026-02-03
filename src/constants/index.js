@@ -10,7 +10,7 @@ const experiences = [
     iconBg: "black",
     // date: "25 October 2023",
     points: [
-      "INR 100 rupees will be handed over to each participating team on 8th Feb,9 am.",
+      "INR 100 rupees will be handed over to each participating team on 14th Feb,9 am.",
     ],
   },
   {

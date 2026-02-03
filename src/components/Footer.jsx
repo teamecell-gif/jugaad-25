@@ -13,7 +13,7 @@ const Footer = () => {
             <div className="grid grid-cols-1 gap-6 lg:gap-x-24 xl:gap-x-6 md:grid-cols-2 xl:grid-cols-4 lg:col-span-3">
               <div className="flex flex-col items-center gap-2">
                 <p className="font-bold text-xl uppercase text-start">
-                  Jugaad&apos;25
+                  Jugaad&apos;26
                 </p>
                 <p className="text-center text-base mt-4 w-1/2 lg:w-full">
                   Consortium, the Annual Entrepreneurship Summit and Management

@@ -29,9 +29,9 @@ const Contact = () => {
                 type: "ease-in",
               }}
             >
-              <a href="https://wa.me/9767325988" target="_blank">
-                <div className="membername col-md-12">Rugved Targaonkar</div>
-                <div className="membersubtitle col-md-12">9767325988</div>
+              <a href="https://wa.me/8247080606" target="_blank">
+                <div className="membername col-md-12">Sriram</div>
+                <div className="membersubtitle col-md-12">8247080606</div>
               </a>
             </motion.div>
           </div>
@@ -46,9 +46,9 @@ const Contact = () => {
                 type: "ease-in",
               }}
             >
-              <a href="https://wa.me/9511339549" target="_blank">
-                <div className="membername col-md-12">Vaishnavee Garg</div>
-                <div className="membersubtitle col-md-12">9511339549</div>
+              <a href="https://wa.me/9878259975" target="_blank">
+                <div className="membername col-md-12">Prince</div>
+                <div className="membersubtitle col-md-12">9878259975</div>
               </a>
             </motion.div>
           </div>
