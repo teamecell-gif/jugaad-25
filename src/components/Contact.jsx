@@ -29,7 +29,8 @@ const Contact = () => {
                 type: "ease-in",
               }}
             >
-              <a href="https://wa.me/8247080606" target="_blank">
+              {/* FIXED: Added rel="noreferrer" */}
+              <a href="https://wa.me/8247080606" target="_blank" rel="noreferrer">
                 <div className="membername col-md-12">Sriram</div>
                 <div className="membersubtitle col-md-12">8247080606</div>
               </a>
@@ -46,7 +47,8 @@ const Contact = () => {
                 type: "ease-in",
               }}
             >
-              <a href="https://wa.me/9878259975" target="_blank">
+              {/* FIXED: Added rel="noreferrer" */}
+              <a href="https://wa.me/9878259975" target="_blank" rel="noreferrer">
                 <div className="membername col-md-12">Prince</div>
                 <div className="membersubtitle col-md-12">9878259975</div>
               </a>
@@ -57,4 +59,5 @@ const Contact = () => {
     </>
   );
 };
+
 export default Contact;

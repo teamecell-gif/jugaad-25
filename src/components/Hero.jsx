@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react"; // REMOVED { useState }
 import "./hero.css";
 import Jugaad from "../assets/jugaadnew.png";
 import { motion } from "framer-motion";

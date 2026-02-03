@@ -1,7 +1,8 @@
-import iconecell from "../assets/icon.png";
+// REMOVED: import iconecell from "../assets/icon.png"; 
 import fivenov from "../assets/8th.png";
 import clock from "../assets/clock.png";
 import jugaad from "../assets/jugaadnew.png";
+
 const experiences = [
   {
     title: "100 rupees dega",
