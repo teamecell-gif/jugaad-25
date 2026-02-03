@@ -7,12 +7,26 @@
   background-size: cover;
 }
 
+/* MOVED OUTSIDE: Defined globally is safer */
 @keyframes jugad {
   0% {
     transform: translateY(-30px);
   }
   50% {
     transform: translateY(30px);
+  }
+}
+
+/* MOVED OUTSIDE: Defined globally to prevent nesting errors */
+@keyframes img {
+  0% {
+    transform: translateX(60px);
+  }
+  50% {
+    transform: translateX(-60px);
+  }
+  100% {
+    transform: translateX(60px);
   }
 }
 
@@ -29,17 +43,9 @@
     animation: img 1s ease-out;
     animation-iteration-count: infinite;
   }
-  @keyframes img {
-    0% {
-      transform: translateX(60px);
-    }
-    50% {
-      transform: translateX(-60px);
-    }
-    100% {
-      transform: translateX(60px);
-    }
-  }
+  
+  /* Removed nested @keyframes from here */
+
   #aboutsec {
     display: flex;
   }
