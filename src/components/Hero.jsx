@@ -2,7 +2,6 @@ import React from "react"; // REMOVED { useState }
 import "./hero.css";
 import Jugaad from "../assets/jugaadnew.png";
 import { motion } from "framer-motion";
-import Rules from "../assets/RULES.pdf";
 
 const Hero = () => {
   return (
@@ -52,7 +51,7 @@ const Hero = () => {
               duration: 2,
               type: "ease-in",
             }}
-            href={Rules}
+            href="https://drive.google.com/file/d/1n1ElDcHUcOTJ-oJvtWiMT_0FKt42AsZJ/view?usp=sharing"
             download="RULES.pdf"
             className="relative inline-flex text-center justify-center items-center px-12 py-3 m-4 overflow-hidden text-lg font-medium text-[yellow] border-2 border-[yellow] rounded-full hover:text-white group hover:bg-gray-50"
           >
